@@ -1,7 +1,9 @@
 package com.flashcardsystem.infrastructure.repository.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,20 +16,20 @@ public class CardEntity {
     private String question;
     private String answer;
 
-    @ManyToMany
+    @Column(name = "box_id", nullable = false)
+    private int boxId;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name= "card_tag",
             joinColumns = @JoinColumn(name="card_id"),
             inverseJoinColumns = @JoinColumn(name= "tag_id")
     )
     private Set<TagEntity> tags;
-
-    public CardEntity(String id, String question, String answer, Set<TagEntity> tags) {
-        this.id = id;
-        this.question = question;
-        this.answer = answer;
-        this.tags = tags;
-    }
 
     public CardEntity() {}
 
@@ -63,16 +65,32 @@ public class CardEntity {
         this.tags = tags;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public int getBoxId() {
+        return boxId;
+    }
+
+    public void setBoxId(int boxId) {
+        this.boxId = boxId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CardEntity that = (CardEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(question, that.question) && Objects.equals(answer, that.answer) && Objects.equals(tags, that.tags);
+        return boxId == that.boxId && Objects.equals(id, that.id) && Objects.equals(question, that.question) && Objects.equals(answer, that.answer) && Objects.equals(createdAt, that.createdAt) && Objects.equals(tags, that.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, answer, tags);
+        return Objects.hash(id, question, answer, boxId, createdAt, tags);
     }
 
     @Override
@@ -81,6 +99,8 @@ public class CardEntity {
                 "id='" + id + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
+                ", boxId=" + boxId +
+                ", createdAt=" + createdAt +
                 ", tags=" + tags +
                 '}';
     }

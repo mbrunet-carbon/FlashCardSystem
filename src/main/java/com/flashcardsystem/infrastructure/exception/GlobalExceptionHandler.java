@@ -1,5 +1,6 @@
 package com.flashcardsystem.infrastructure.exception;
 
+import com.flashcardsystem.domain.exception.BoxNotFoundException;
 import com.flashcardsystem.domain.exception.CardNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CardNotFoundException.class})
     protected ResponseEntity<String> cardNotFound(CardNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler({BoxNotFoundException.class})
+    protected ResponseEntity<String> boxNotFound(BoxNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }

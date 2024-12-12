@@ -1,19 +1,14 @@
 package com.flashcardsystem.domain.model;
 
-import com.flashcardsystem.infrastructure.repository.entity.CardEntity;
-
 import java.util.Objects;
-import java.util.Set;
 
 public class Tag {
     private String id;
     private String name;
-    private Set<CardEntity> cards;
 
-    public Tag(String id, String name, Set<CardEntity> cards) {
+    public Tag(String id, String name) {
         this.id = id;
         this.name = name;
-        this.cards = cards;
     }
 
     public String getId() {
@@ -32,24 +27,16 @@ public class Tag {
         this.name = name;
     }
 
-    public Set<CardEntity> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<CardEntity> cards) {
-        this.cards = cards;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag = (Tag) o;
-        return Objects.equals(id, tag.id) && Objects.equals(name, tag.name) && Objects.equals(cards, tag.cards);
+        return Objects.equals(id, tag.id) && Objects.equals(name, tag.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, cards);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -57,7 +44,6 @@ public class Tag {
         return "Tag{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", cards=" + cards +
                 '}';
     }
 }

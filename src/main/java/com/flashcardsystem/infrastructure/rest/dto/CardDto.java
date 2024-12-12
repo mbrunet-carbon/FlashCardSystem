@@ -1,12 +1,15 @@
 package com.flashcardsystem.infrastructure.rest.dto;
 
 import com.flashcardsystem.domain.model.Tag;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
 
 public class CardDto {
     private String id;
+    @NotBlank
     private String question;
+    @NotBlank
     private String answer;
     private Set<Tag> tags;
 

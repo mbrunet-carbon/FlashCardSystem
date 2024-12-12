@@ -1,7 +1,6 @@
 package com.flashcardsystem.domain.model;
 
-import com.flashcardsystem.infrastructure.repository.entity.TagEntity;
-
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,11 +9,14 @@ public class Card {
     private String question;
     private String answer;
     private Set<Tag> tags;
+    private int boxId;
+    private LocalDateTime createdAt;
 
-    public Card(String id, String question, String answer, Set<Tag> tags) {
+    public Card(String id, String question, String answer, int boxId, Set<Tag> tags) {
         this.id = id;
         this.question = question;
         this.answer = answer;
+        this.boxId = boxId;
         this.tags = tags;
     }
 
@@ -50,16 +52,32 @@ public class Card {
         this.tags = tags;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public int getBoxId() {
+        return boxId;
+    }
+
+    public void setBoxId(int boxId) {
+        this.boxId = boxId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(id, card.id) && Objects.equals(question, card.question) && Objects.equals(answer, card.answer) && Objects.equals(tags, card.tags);
+        return Objects.equals(id, card.id) && Objects.equals(question, card.question) && Objects.equals(answer, card.answer) && Objects.equals(tags, card.tags) && Objects.equals(boxId, card.boxId) && Objects.equals(createdAt, card.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, answer, tags);
+        return Objects.hash(id, question, answer, tags, boxId, createdAt);
     }
 
     @Override
@@ -69,6 +87,8 @@ public class Card {
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", tags=" + tags +
+                ", boxId=" + boxId +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

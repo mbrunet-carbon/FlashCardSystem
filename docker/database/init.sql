@@ -8,23 +8,26 @@ USE flashcarddb;
 
 CREATE TABLE box
 (
-    id        VARCHAR(255) NOT NULL,
-    category  INT          NOT NULL,
+    id        INT          NOT NULL,
     frequency INT          NOT NULL,
-    created_at datetime     NULL,
     CONSTRAINT pk_box PRIMARY KEY (id)
 );
 
 ALTER TABLE box
-    ADD CONSTRAINT uc_017004a29e9c36d308cb4bd76 UNIQUE (category);
+    ADD CONSTRAINT uc_017004a29e9c36d308cb4bd76 UNIQUE (id);
 
 CREATE TABLE IF NOT EXISTS card
 (
     id       VARCHAR(255) NOT NULL,
     question VARCHAR(255) NULL,
     answer   VARCHAR(255) NULL,
+    box_id   INT          NOT NULL,
+    created_at DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_card PRIMARY KEY (id)
 );
+
+ALTER TABLE card
+    ADD CONSTRAINT fk_card_box FOREIGN KEY (box_id) REFERENCES box(id);
 
 CREATE TABLE IF NOT EXISTS tag
 (
@@ -54,10 +57,10 @@ ALTER TABLE card_tag
     Insertions
 **/
 
-INSERT INTO box (category, frequency) VALUES (1, 1);
-INSERT INTO box (category, frequency) VALUES (2, 2);
-INSERT INTO box (category, frequency) VALUES (3, 4);
-INSERT INTO box (category, frequency) VALUES (4, 8);
-INSERT INTO box (category, frequency) VALUES (5, 16);
-INSERT INTO box (category, frequency) VALUES (6, 32);
-INSERT INTO box (category, frequency) VALUES (7, 64);
+INSERT INTO box (id, frequency) VALUES (1, 1);
+INSERT INTO box (id, frequency) VALUES (2, 2);
+INSERT INTO box (id, frequency) VALUES (3, 4);
+INSERT INTO box (id, frequency) VALUES (4, 8);
+INSERT INTO box (id, frequency) VALUES (5, 16);
+INSERT INTO box (id, frequency) VALUES (6, 32);
+INSERT INTO box (id, frequency) VALUES (7, 64);

@@ -1,7 +1,6 @@
 package com.flashcardsystem.infrastructure.repository;
 
 import com.flashcardsystem.domain.model.Card;
-import com.flashcardsystem.domain.model.Tag;
 import com.flashcardsystem.domain.port.CardRepository;
 import com.flashcardsystem.infrastructure.repository.entity.CardEntity;
 import com.flashcardsystem.infrastructure.repository.mapper.CardMapper;

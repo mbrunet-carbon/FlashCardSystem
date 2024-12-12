@@ -1,6 +1,7 @@
 package com.flashcardsystem.infrastructure.repository;
 
 import com.flashcardsystem.domain.model.Card;
+import com.flashcardsystem.helper.CardFixture;
 import com.flashcardsystem.infrastructure.repository.entity.CardEntity;
 import com.flashcardsystem.infrastructure.repository.mapper.CardMapper;
 import com.flashcardsystem.infrastructure.repository.persistance.CardPersistence;
@@ -38,8 +39,8 @@ class CardRepositoryImplTest {
     @Test
     void shouldCreate() {
         // Given
-        Card card = new Card("1", "Who is Zidane ?", "Football player", Set.of());
-        CardEntity cardEntity = new CardEntity("1", "Who is Zidane ?", "Football player", Set.of());
+        Card card = new Card("1", "Who is Zidane ?", "Football player",1, Set.of());
+        CardEntity cardEntity = CardFixture.buildCardEntity();
 
         // When
         Mockito.when(cardPersistence.save(Mockito.eq(cardEntity))).thenReturn(cardEntity);
@@ -54,8 +55,8 @@ class CardRepositoryImplTest {
         @Test
         void shouldFindById() {
             // Given
-            Card card = new Card("1", "Who is Zidane ?", "Football player", Set.of());
-            CardEntity cardEntity = new CardEntity("1", "Who is Zidane ?", "Football player", Set.of());
+            Card card = new Card("1", "Who is Zidane ?", "Football player",1, Set.of());
+            CardEntity cardEntity = CardFixture.buildCardEntity();
 
             // When
             Mockito.when(cardPersistence.findById(Mockito.eq("1"))).thenReturn(Optional.of(cardEntity));
@@ -68,7 +69,7 @@ class CardRepositoryImplTest {
         @Test
         void shouldNotFound() {
             // Given
-            Card card = new Card("1", "Who is Zidane ?", "Football player", Set.of());
+            Card card = new Card("1", "Who is Zidane ?", "Football player",1, Set.of());
 
             // When
             Mockito.when(cardPersistence.findById(Mockito.eq("1"))).thenReturn(Optional.empty());
@@ -94,12 +95,12 @@ class CardRepositoryImplTest {
     @Test
     void shouldFindAll() {
         // Given + When
-        CardEntity cardEntity = new CardEntity("1", "Who is Zidane ?", "Football player", Set.of());
+        CardEntity cardEntity = CardFixture.buildCardEntity();
         Mockito.when(cardPersistence.findAll()).thenReturn(List.of(cardEntity));
         List<Card> cardsResponse = cardRepository.findAll();
 
         // Then
-        List<Card> expectedCards = List.of(new Card("1", "Who is Zidane ?", "Football player", Set.of()));
+        List<Card> expectedCards = List.of(new Card("1", "Who is Zidane ?", "Football player",1, Set.of()));
         Assertions.assertEquals(cardsResponse, expectedCards);
     }
 }
